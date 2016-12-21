@@ -1,10 +1,10 @@
 from __future__ import print_function
-
 import sys
+sys.path.append(".")
 from operator import add
 from tweetAPI import dataSource
 
-from pyspark.sql import SparkSession
+from pyspark import SparkContext, SparkConf
 
 
 if __name__ == "__main__":
@@ -12,12 +12,10 @@ if __name__ == "__main__":
         print("Usage: wordcount <file>", file=sys.stderr)
         exit(-1)
 
-    spark = SparkSession\
-        .builder\
-        .appName("PythonWordCount")\
-        .getOrCreate()
+    conf = SparkConf().setAppName(appName).setMaster(master)
+    sc = SparkContext(conf=conf)
 
-    result = spark.parallelize(dataSource.getByTime())
+    result = sc.parallelize(dataSource.getByTime())
 
     counts = result.flatMap(lambda x:x.text)\
                    .flatMap(lambda x: x.split(' ')) \
@@ -26,5 +24,3 @@ if __name__ == "__main__":
     output = counts.collect()
     for (word, count) in output:
         print("%s: %i" % (word, count))
-
-    spark.stop()
