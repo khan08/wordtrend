@@ -12,7 +12,7 @@ if __name__ == "__main__":
         print("Usage: wordcount <file>", file=sys.stderr)
         exit(-1)
 
-    conf = SparkConf().setAppName(appName).setMaster(master)
+    conf = SparkConf().setAppName('appName')
     sc = SparkContext(conf=conf)
 
     result = sc.parallelize(dataSource.getByTime())
