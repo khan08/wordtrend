@@ -17,7 +17,7 @@ if __name__ == "__main__":
 
     result = sc.parallelize(dataSource.getByTime())
 
-    counts = result.flatMap(lambda x:x.text)\
+    counts = result.flatMap(lambda x:x.text.encode('utf-8'))\
                    .flatMap(lambda x: x.split(' ')) \
                    .map(lambda x: (x, 1)) \
                    .reduceByKey(add)
