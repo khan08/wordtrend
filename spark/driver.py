@@ -14,7 +14,7 @@ if __name__ == "__main__":
 
     conf = SparkConf().setAppName('appName')
     sc = SparkContext(conf=conf)
-    sc.addPyFile('dist/wordTrend-1.0-py2.7.egg')
+    sc.addPyFile('venv/lib/python2.7/site-packages/*.*')
     result = sc.parallelize(dataSource.getByTime())
 
     counts = result.flatMap(lambda x:x.text.encode('utf-8'))\
