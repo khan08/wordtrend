@@ -14,12 +14,14 @@ if __name__ == "__main__":
 
     conf = SparkConf().setAppName('appName')
     sc = SparkContext(conf=conf)
+    sc.addPyFile('dist/wordTrend-1.0-py2.7.egg')
     result = sc.parallelize(dataSource.getByTime())
 
     counts = result.flatMap(lambda x:x.text.encode('utf-8'))\
                    .flatMap(lambda x: x.split(' ')) \
                    .map(lambda x: (x, 1)) \
                    .reduceByKey(add)
+
     output = counts.collect()
     for (word, count) in output:
         print("%s: %i" % (word, count))
