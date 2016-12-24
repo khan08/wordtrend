@@ -14,10 +14,8 @@ if __name__ == "__main__":
 
     conf = SparkConf().setAppName('appName')
     sc = SparkContext(conf=conf)
-    sc.addPyFile('venv/lib/python2.7/site-packages/*.*')
     result = sc.parallelize(dataSource.getByTime())
-
-    counts = result.flatMap(lambda x:x.text.encode('utf-8'))\
+    counts = result.map(lambda x:x.text.encode('utf-8'))\
                    .flatMap(lambda x: x.split(' ')) \
                    .map(lambda x: (x, 1)) \
                    .reduceByKey(add)
