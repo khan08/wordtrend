@@ -15,10 +15,7 @@ if __name__ == "__main__":
     conf = SparkConf().setAppName('appName')
     sc = SparkContext(conf=conf)
     result = sc.parallelize(dataSource.getByTime())
-    counts = result.map(lambda x:x.text.encode('utf-8'))\
-                   .flatMap(lambda x: x.split(' ')) \
-                   .map(lambda x: (x, 1)) \
-                   .reduceByKey(add)
+    counts = result.map(lambda x:get_feature(tokenize(x.text.encode('utf-8'))))
 
     output = counts.collect()
     for (word, count) in output:
