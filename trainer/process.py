@@ -1,5 +1,7 @@
 from nltk.tokenize import RegexpTokenizer
 from nltk.corpus import stopwords, brown
+from nltk import FreqDist
+import pickle
 
 def preprocess(sentence_list,label):
     document = []
@@ -18,7 +20,7 @@ def tokenize(sentence):
     return filtered_words
 
 
-def get_feature(token_list,label,frequency_list):
+def get_feature(token_list,frequency_list):
     wordlist = frequency_list[:5000]
     features = {}
     for w in wordlist:
@@ -30,6 +32,6 @@ def get_feature(token_list,label,frequency_list):
 set = stopwords.words('english')
 frequency_list = FreqDist(i.lower() for i in brown.words() if i.isalpha() and i not in set and i.lower() not in set)
 wordlist = frequency_list.most_common()[:5000]
-with open("pickled_algos/allWords.pickle","wb") as f:
+with open("C:/Users/Kang/trunk/pickle/allWords.pickle","wb") as f:
     pickle.dump(wordlist,f,protocol=2)
 '''

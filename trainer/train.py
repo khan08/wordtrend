@@ -17,7 +17,7 @@ raw_inputs=[rating1,rating2,rating3,rating4,rating5]
 input=[]
 for j in raw_inputs:
     for i in j:
-        tuple=(get_feature(i[0],i[1],frequency_list),i[1])
+        tuple=(get_feature(i[0],frequency_list),i[1])
         input.append(tuple)
 print("Tokenize Finished")
 
