@@ -3,7 +3,7 @@ import sys
 sys.path.append(".")
 from operator import add
 from tweetAPI import dataSource
-
+from trainer.process import get_feature,tokenize
 from pyspark import SparkContext, SparkConf
 
 
